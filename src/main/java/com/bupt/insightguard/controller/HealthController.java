@@ -2,32 +2,31 @@ package com.bupt.insightguard.controller;
 
 
 import com.bupt.insightguard.entity.HealthData;
+import com.bupt.insightguard.entity.HealthRecord;
 import com.bupt.insightguard.repository.HealthDataRepository;
+import com.bupt.insightguard.repository.HealthRecordRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/health")
-@CrossOrigin(origins = "*")   // 允许跨域,便于和前端vue连接
-public class HealthController {
-    private final HealthDataRepository healthDataRepository;
 
-    public HealthController (HealthDataRepository healthDataRepository) {
-        this.healthDataRepository = healthDataRepository;
+public class HealthController {
+
+    private final HealthRecordRepository healthRecordRepository;
+
+    public HealthController(HealthRecordRepository healthRecordRepository) {
+        this.healthRecordRepository = healthRecordRepository;
     }
 
-    @GetMapping("/latest")
-    public List<HealthData> getLatestData() {
-        return healthDataRepository.findAll(
-                PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "recordTime"))
-            )        .getContent();
 
+    @GetMapping("/latest")
+    public List<HealthRecord> getLatestData(@RequestParam Long patientId) {
+        return healthRecordRepository.findTop10ByPatientIdOrderByRecordTimeDesc(patientId);
 
     }
 
