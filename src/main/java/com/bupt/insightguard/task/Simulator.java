@@ -41,3 +41,5 @@
 //        System.out.println("成功模拟一条数据 -> 心率: " + heartRate + ", 呼吸: " + breathRate + ", 状态: " + (status == 1 ? "【预警】" : "正常"));
 //    }
 //}
+
+

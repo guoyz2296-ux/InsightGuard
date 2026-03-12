@@ -9,3 +9,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+doubao:
+  api:
+    key: f5e3965e-5d25-4736-9137-1fdb7e0188ee
+    url: https://ark.cn-beijing.volces.com/api/v3/chat/completions
+  model:
+    id: doubao-1-5-pro-32k-250115

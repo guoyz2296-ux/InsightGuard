@@ -13,6 +13,7 @@ public class AiAdviceLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Long patientId;
+    private Integer heart_rate_avg;
 
     @Column(columnDefinition = "TEXT")
     private String adviceContent;
@@ -56,6 +57,14 @@ public class AiAdviceLog {
 
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getHeart_rate_avg() {
+        return heart_rate_avg;
+    }
+
+    public void setHeart_rate_avg(Integer heart_rate_avg) {
+        this.heart_rate_avg = heart_rate_avg;
     }
 }
 
