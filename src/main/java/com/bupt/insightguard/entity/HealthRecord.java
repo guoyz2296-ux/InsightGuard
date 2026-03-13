@@ -26,8 +26,25 @@ public class HealthRecord {
     @Column(name = "motion_scale")
     private Float motionScale; // 体动强度 0.0-1.0
 
+    @Column(name = "noise")
+    private Float noise; // 环境噪音强度
+
     @Column(name = "status_code")
     private String statusCode; // NORMAL, STRESS, ATTACK
+
+    @Column(name = "stress_level")
+    private Integer stressLevel; // 1,2,3,4
+
+    public Float getNoise() {
+        return noise;
+    }
+
+    public void setNoise(Float noise) {
+        this.noise = noise;
+    }
+
+    @Column(name = "ai_insight")
+    private String aiInsight; // NORMAL, STRESS, ATTACK
 
     public Long getId() {
         return id;
@@ -109,11 +126,7 @@ public class HealthRecord {
         this.recordTime = recordTime;
     }
 
-    @Column(name = "stress_level")
-    private Integer stressLevel; // 预警等级 1-4
 
-    @Column(name = "ai_insight", columnDefinition = "TEXT")
-    private String aiInsight; // AI给家属的建议
 
     @Column(name = "record_time", updatable = false)
     private LocalDateTime recordTime; // 监测时间

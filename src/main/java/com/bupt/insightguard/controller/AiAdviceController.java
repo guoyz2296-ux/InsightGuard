@@ -26,9 +26,14 @@ public class AiAdviceController {
     @GetMapping("/generate")
     public String generateAdvice(@RequestParam Long patientId,
                                  @RequestParam Long recordId,
-                                 @RequestParam int hr) {
+                                 @RequestParam int heartRate,
+                                 @RequestParam int respRate,
+                                 @RequestParam int spo2,
+                                 @RequestParam float motionScale,
+                                 @RequestParam float noise
+                                 ) {
         // 调用 Service，它会自动存入新表并更新旧表
-        return aiService.getAndSaveHealthAdvice(patientId, recordId, hr);
+        return aiService.getAndSaveHealthAdvice(patientId, recordId, heartRate, respRate, spo2, motionScale, noise);
     }
 
     /**
