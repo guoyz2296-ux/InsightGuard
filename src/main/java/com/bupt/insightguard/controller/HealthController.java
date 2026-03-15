@@ -1,13 +1,8 @@
 package com.bupt.insightguard.controller;
 
 
-import com.bupt.insightguard.entity.HealthData;
 import com.bupt.insightguard.entity.HealthRecord;
-import com.bupt.insightguard.repository.HealthDataRepository;
 import com.bupt.insightguard.repository.HealthRecordRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

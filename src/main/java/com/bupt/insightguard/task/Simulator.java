@@ -1,13 +1,10 @@
-//package com.bupt.insightguard.task;
-//
-//import com.bupt.insightguard.entity.HealthData;
-//import com.bupt.insightguard.repository.HealthDataRepository;
-//import org.springframework.scheduling.annotation.Scheduled;
-//import org.springframework.stereotype.Component;
-//
-//import java.time.LocalDateTime;
-//import java.util.Random;
-//
+package com.bupt.insightguard.task;
+
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.Random;
+
 //@Component
 //public class HeartbeatSimulator {
 //    private final HealthDataRepository healthDataRepository;
@@ -41,5 +38,4 @@
 //        System.out.println("成功模拟一条数据 -> 心率: " + heartRate + ", 呼吸: " + breathRate + ", 状态: " + (status == 1 ? "【预警】" : "正常"));
 //    }
 //}
-
 

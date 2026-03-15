@@ -1,13 +1,17 @@
 package com.bupt.insightguard.service;
 
 import com.bupt.insightguard.entity.AiAdviceLog;
+import com.bupt.insightguard.entity.HealthRecord;
 import com.bupt.insightguard.repository.AiAdviceRepository;
 import com.bupt.insightguard.repository.HealthRecordRepository;
+import org.hibernate.grammars.hql.HqlParser;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jackson.autoconfigure.JacksonProperties;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,7 +99,33 @@ public class AiService {
             log.setAdviceContent(aiInsight);
             aiAdviceRepo.save(log);
 
-            // 7. 更新旧表 health_records 的全量判定字段
+            // 7. 修正后的存储逻辑：如果不存在就新建，存在就更新
+            HealthRecord record = healthRepo.findById(recordId).orElse(new HealthRecord());
+
+            // 填充生理指标（防止新记录没数据）
+            record.setPatientId(patientId);
+            record.setHeartRate(heartRate);
+            record.setRespRate(respRate);
+            record.setSpo2(spo2);
+            record.setMotionScale(motionScale);
+            record.setNoise(noise);
+
+            // 填充 AI 判定结果
+            record.setStatusCode(statusCode);
+            record.setStressLevel(stressLevel);
+            record.setAiInsight(aiInsight);
+            record.setRecordTime(LocalDateTime.now()); // 别忘了给个时间
+
+            healthRepo.save(record); // 统一用 save，它会自动判断是 INSERT 还是 UPDATE
+//
+//            // 7. 更新旧表 health_records 的全量判定字段
+//            healthRepo.findById(recordId).ifPresent(record -> {
+//                record.setStatusCode(statusCode); // 对应数据库 status_code
+//                record.setStressLevel(stressLevel); // 对应数据库 stress_level
+//                record.setAiInsight(aiInsight); // 对应数据库 ai_insight
+//                healthRepo.save(record); // 触发持久化
+//            });
+
             healthRepo.updateAiFullAnalysis(recordId, statusCode, stressLevel, aiInsight);
 
             return aiInsight;
